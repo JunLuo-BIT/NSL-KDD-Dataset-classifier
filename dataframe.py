@@ -47,15 +47,16 @@ for line in dataset_lines:
 
     # we can select the required fields(columns) here.
     # if not simply pass temp_arr.
-    final_array.append(temp_arr[:6] + temp_arr[20:])
+    # final_array.append(temp_arr[:6] + temp_arr[20:])
+    final_array.append(temp_arr)
 
     # append the label to target list.
     target.append(pair_values[temp[-1]])
 
 # This is done to select the first 80000 records of the dataset.
 # Frankly speaking this is not necessary.
-final_array = final_array[:80000]
-target = target[:80000]
+final_array = final_array[:8000]
+target = target[:8000]
 
 # convert the regular list into numpy array.
 df_data = np.asarray(final_array)

@@ -24,9 +24,9 @@ def get_list():
 
             val = line.split('=')
 
-            if debug:
-                print val
-
             value_dict[val[0]] = int(val[1])
+
+    if debug:
+        print value_dict
 
     return value_dict
