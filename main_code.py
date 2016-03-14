@@ -3,24 +3,28 @@
 
 import dataframe
 
-from sklearn.feature_selection import RFE
-from sklearn.feature_selection import SelectKBest
+import mlpy
 
-from sklearn.svm import SVR
+if __debug__:
+    print 'Dataframe contains', len(dataframe.df_data), 'data',
+    print 'and contains', len(dataframe.df_target), 'target'
 
-# The data
-x = dataframe.df_data[:60]
-y = dataframe.df_target[:60]
+x = dataframe.df_data
+y = dataframe.df_target
 
-# RFE
-estimator = SVR(kernel="linear")
-selector = RFE(estimator, 5, step=1)
+if __debug__:
+    print x.shape, y.shape
 
-print 'Fitting selector'
-selector = selector.fit(x, y)
+# Here we are tyring to reduce the dimensionality by using
+# Principal Component Analysis(PCA)
+# Create an PCA object.
 
-print 'Done fitting'
+pca = mlpy.PCA()
+print 'PCA component learning from the data'
+pca.learn(x)
+print 'PCA trained'
 
-print "support", selector.support_
-print "ranking", selector.ranking_
-# RFE
+# embed x into k=2 dimension subspace.
+z = pca.transform(x, k=10)      # z is the reduced array.
+
+print 'After transform, data shape', z.shape
