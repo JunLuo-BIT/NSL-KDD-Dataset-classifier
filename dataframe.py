@@ -28,22 +28,20 @@ final_array = list()
 target = []  # contains the labels.
 
 for line in dataset_lines:
-    line = line.replace('\n', '')
-
-    temp = line.split(',')
+    temp = line.replace('\n', '').split(',')
 
     # Get the n-1 data, (i.e features)
-    items = temp[:len(temp) - 1]
+    features = temp[:len(temp) - 1]
 
     temp_arr = []
 
-    for item in items:
-        if item == 'exec':
-            item = 'exec_val'
+    for attrib in features:
+        if attrib == 'exec':
+            attrib = 'exec_val'
         try:
-            temp_arr.append(float(item))
+            temp_arr.append(float(attrib))
         except ValueError:
-            temp_arr.append(pair_values[item])
+            temp_arr.append(pair_values[attrib])
 
     # we can select the required fields(columns) here.
     # if not simply pass temp_arr.
