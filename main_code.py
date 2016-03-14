@@ -24,7 +24,8 @@ print 'PCA component learning from the data'
 pca.learn(x)
 print 'PCA trained'
 
+
 # embed x into k=2 dimension subspace.
-z = pca.transform(x, k=10)      # z is the reduced array.
+z = pca.transform(x, k=5)      # z is the reduced array.
 
 print 'After transform, data shape', z.shape
