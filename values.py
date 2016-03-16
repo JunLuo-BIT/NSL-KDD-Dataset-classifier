@@ -8,14 +8,14 @@ value_dict = {}
 
 tag = 'key_val/'
 
-files_list = ['attack.py', 'protocols.py', 'service.py', 'flags.py']
+files_list = ['attack.txt', 'protocols.txt', 'service.txt', 'flags.txt']
 
 debug = True
 
 
 def get_list():
-    for file in files_list:
-        with open(tag + file) as f:
+    for each_file in files_list:
+        with open(tag + each_file) as f:
             all_lines = f.readlines()
 
         for line in all_lines:

@@ -25,7 +25,7 @@ pair_values = values.get_list()
 # contains the training data.
 final_array = list()
 
-target = []  # contains the labels.
+target = []  # contains the target label.
 
 for line in dataset_lines:
     temp = line.replace('\n', '').split(',')
@@ -36,8 +36,6 @@ for line in dataset_lines:
     temp_arr = []
 
     for attrib in features:
-        if attrib == 'exec':
-            attrib = 'exec_val'
         try:
             temp_arr.append(float(attrib))
         except ValueError:
