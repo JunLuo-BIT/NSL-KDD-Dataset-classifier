@@ -23,15 +23,15 @@ with open(file_name) as dataset_file:
 pair_values = values.get_list()
 
 # contains the training data.
-final_array = list()
+final_array = []
 
 target = []  # contains the target label.
 
 for line in dataset_lines:
-    temp = line.replace('\n', '').split(',')
+    items = line.replace('\n', '').split(',')
 
     # Get the n-1 data, (i.e features)
-    features = temp[:len(temp) - 1]
+    features = items[:len(items) - 1]
 
     temp_arr = []
 
@@ -41,18 +41,10 @@ for line in dataset_lines:
         except ValueError:
             temp_arr.append(pair_values[attrib])
 
-    # we can select the required fields(columns) here.
-    # if not simply pass temp_arr.
-    # final_array.append(temp_arr[:6] + temp_arr[20:])
     final_array.append(temp_arr)
 
     # append the label to target list.
-    target.append(pair_values[temp[-1]])
-
-# This is done to select the first 80000 records of the dataset.
-# Frankly speaking this is not necessary.
-# final_array = final_array[:800]
-# target = target[:800]
+    target.append(pair_values[items[-1]])
 
 # convert the regular list into numpy array.
 df_data = np.asarray(final_array)
