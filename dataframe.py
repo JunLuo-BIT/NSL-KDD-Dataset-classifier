@@ -14,7 +14,9 @@ import getpass
 import numpy as np
 import values
 
-file_name = "/home/%s/dataset/corrected" % (getpass.getuser())
+input_dataset = 'corrected'
+
+file_name = "/home/%s/dataset/%s" % (getpass.getuser(), input_dataset)
 
 with open(file_name) as dataset_file:
     dataset_lines = dataset_file.readlines()

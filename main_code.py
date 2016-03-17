@@ -3,7 +3,7 @@
 
 import dataframe
 
-import mlpy
+# import mlpy
 
 if __debug__:
     print 'Dataframe contains', len(dataframe.df_data), 'data',
