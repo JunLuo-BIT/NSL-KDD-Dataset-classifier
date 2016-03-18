@@ -15,11 +15,17 @@ import numpy as np
 import values
 
 input_dataset = 'corrected'
-
 file_name = "/home/%s/dataset/%s" % (getpass.getuser(), input_dataset)
+
+debug = True
 
 with open(file_name) as dataset_file:
     dataset_lines = dataset_file.readlines()
+
+
+if debug:
+    print 'Dataset has %d instances, each instance with %d attributes' % (len(dataset_lines), len(dataset_lines[0]))
+
 
 # Get the key value pair which has been already done.
 pair_values = values.get_list()
@@ -31,6 +37,10 @@ target = []  # contains the target label.
 
 for line in dataset_lines:
     items = line.replace('\n', '').split(',')
+
+    if False:
+        print 'items length %d' % (len(items))
+        print items
 
     # Get the n-1 data, (i.e features)
     features = items[:len(items) - 1]
@@ -51,3 +61,5 @@ for line in dataset_lines:
 # convert the regular list into numpy array.
 df_data = np.asarray(final_array)
 df_target = np.asarray(target)
+
+# print df_data[0], len(df_data[0])

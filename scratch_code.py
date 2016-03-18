@@ -5,14 +5,21 @@ import dataframe
 import datetime
 
 x, y = dataframe.df_data, dataframe.df_target
+
+print x
+
+print 'Data size', x.size, ', Targe size', y.size
+
 cx = x
 cy = y
+
+steps = -1
 
 f = open('/home/dtlabz/result.txt', 'a')
 
 estimator = SVR(kernel='linear')
 
-for i in range(10):
+for i in range(40, 30, steps):
     selector = RFE(estimator, i, step=1)
 
     print 'Fitting selector'
