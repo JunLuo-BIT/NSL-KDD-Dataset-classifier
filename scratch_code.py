@@ -8,7 +8,7 @@ x, y = dataframe.df_data, dataframe.df_target
 
 print x
 
-print 'Data size', x.size, ', Targe size', y.size
+print 'Data size', len(x[0]), ', Target size', len(y)
 
 cx = x
 cy = y
@@ -22,7 +22,8 @@ estimator = SVR(kernel='linear')
 for i in range(40, 30, steps):
     selector = RFE(estimator, i, step=1)
 
-    print 'Fitting selector'
+    x = cx
+    y = cy
 
     f.write('Current i: ' + str(i) + ' ')
     f.write('Time ' + str(datetime.datetime.now()))
@@ -30,6 +31,7 @@ for i in range(40, 30, steps):
     print 'Current i: ' + str(i) + ' '
     print 'Time ' + str(datetime.datetime.now())
 
+    print 'Fitting selector'
     selector = selector.fit(x, y)
 
     print selector.support_
@@ -37,6 +39,8 @@ for i in range(40, 30, steps):
     try:
         f.write(str(selector.support_) + '\n')
         print str(selector.support_) + '\n'
+        print selector.get_support(indices=True)
+        f.write(str(selector.get_support(indices=True)) + '\n')
     except:
         print 'Error with f.write selector support'
 

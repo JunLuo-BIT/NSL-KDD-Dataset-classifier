@@ -24,7 +24,7 @@ with open(file_name) as dataset_file:
 
 
 if debug:
-    print 'Dataset has %d instances, each instance with %d attributes' % (len(dataset_lines), len(dataset_lines[0]))
+    print 'Dataset has %d instances, each instance with %d attributes' % (len(dataset_lines), len(dataset_lines[0].split(',')))
 
 
 # Get the key value pair which has been already done.
