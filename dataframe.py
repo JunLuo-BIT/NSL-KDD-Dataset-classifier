@@ -22,10 +22,10 @@ debug = True
 with open(file_name) as dataset_file:
     dataset_lines = dataset_file.readlines()
 
-
 if debug:
-    print 'Dataset has %d instances, each instance with %d attributes' % (len(dataset_lines), len(dataset_lines[0].split(',')))
-
+    print 'Using %s as dataset.' % file_name
+    print 'Dataset has %d instances, each instance with %d attributes' % (
+        len(dataset_lines), len(dataset_lines[0].split(',')))
 
 # Get the key value pair which has been already done.
 pair_values = values.get_list()

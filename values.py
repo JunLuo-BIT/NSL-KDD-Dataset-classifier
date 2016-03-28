@@ -1,20 +1,20 @@
 # values.py
-# This module will go through the files_list, each file in the list contains
+# This module will go through the file_list, each file in the list contains
 # a bunch of key=value pair.
 #
 # This python script will create a dictionary from the key=value pair.
 
-value_dict = {}
+key_val_pair = {}
 
 tag = 'key_val/'
 
-files_list = ['attack.txt', 'protocols.txt', 'service.txt', 'flags.txt']
+file_list = ['attack.txt', 'protocols.txt', 'service.txt', 'flags.txt']
 
 debug = True
 
 
 def get_list():
-    for each_file in files_list:
+    for each_file in file_list:
         with open(tag + each_file) as f:
             all_lines = f.readlines()
 
@@ -24,9 +24,9 @@ def get_list():
 
             val = line.split('=')
 
-            value_dict[val[0]] = int(val[1])
+            key_val_pair[val[0]] = int(val[1])
 
     if debug:
-        print value_dict
+        print key_val_pair
 
-    return value_dict
+    return key_val_pair

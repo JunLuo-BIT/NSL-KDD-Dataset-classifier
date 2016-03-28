@@ -4,7 +4,6 @@ from sklearn.svm import SVC
 
 from sklearn import datasets
 
-
 iris = datasets.load_iris()
 x, y = iris.data, iris.target
 
@@ -20,9 +19,9 @@ selector = selector.fit(x, y)
 print selector.support_
 print selector._get_param_names()
 
-print selector.predict([ 4.6,  3.1,  1.5,  0.2])
+print selector.predict([4.6, 3.1, 1.5, 0.2])
 
 clf = SVC()
 clf.fit(x, y)
 
-print clf.predict([ 4.6,  3.1,  1.5,  0.2])
+print clf.predict([4.6, 3.1, 1.5, 0.2])
