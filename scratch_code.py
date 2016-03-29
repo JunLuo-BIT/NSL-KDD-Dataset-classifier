@@ -4,55 +4,37 @@ from sklearn.svm import SVR
 import dataframe
 import datetime
 
+import os
+
+debug = True
+
 x, y = dataframe.df_data, dataframe.df_target
 
-print x
+print 'Dataset contains %d instances with %d initial features.' % (len(y), len(x[0]))
 
-print 'Data size', len(x[0]), ', Target size', len(y)
-
-cx = x
-cy = y
-
-steps = -1
-
-f = open('/home/dtlabz/result.txt', 'a')
+log_file = open('%s/result.txt' % os.getenv('HOME'), 'a')
 
 estimator = SVR(kernel='linear')
 
-for i in range(40, 30, steps):
-    selector = RFE(estimator, i, step=1)
+for i in range(40, 12, -1):
+    selector = RFE(estimator, i, step=6)
 
-    x = cx
-    y = cy
-
-    f.write('Current i: ' + str(i) + ' ')
-    f.write('Time ' + str(datetime.datetime.now()))
-
-    print 'Current i: ' + str(i) + ' '
-    print 'Time ' + str(datetime.datetime.now())
+    if debug:
+        temp = 'Iteration %d started at %s\n' % (i, str(datetime.datetime.now()))
+        print temp
+        log_file.write(temp)
 
     print 'Fitting selector'
+
     selector = selector.fit(x, y)
 
-    print selector.support_
+    if debug:
+        temp = str(selector.support_) + '\n'
+        log_file.write(temp)
+        print temp
 
-    try:
-        f.write(str(selector.support_) + '\n')
-        print str(selector.support_) + '\n'
-        print selector.get_support(indices=True)
-        f.write(str(selector.get_support(indices=True)) + '\n')
-    except:
-        print 'Error with f.write selector support'
+        temp = str(selector.get_support(indices=True)) + '\n'
+        log_file.write(temp)
+        print temp
 
-    print selector._get_param_names()
-
-    try:
-        f.write(str(selector._get_param_names()))
-        print str(selector._get_param_names())
-    except:
-        print 'Error with f.write selector param names'
-
-    f.write('Done with iteration ' + str(i) + '\n\n')
-    print 'Done with iteration ' + str(i) + '\n\n'
-
-f.close()
+log_file.close()

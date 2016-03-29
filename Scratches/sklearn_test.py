@@ -10,7 +10,7 @@ x, y = iris.data, iris.target
 print 'X.size = '
 
 estimator = SVR(kernel='linear')
-selector = RFE(estimator, 3, step=1)
+selector = RFE(estimator, 2, step=3)
 
 print 'Fitting selector'
 

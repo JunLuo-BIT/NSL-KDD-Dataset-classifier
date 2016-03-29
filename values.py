@@ -10,7 +10,7 @@ tag = 'key_val/'
 
 file_list = ['attack.txt', 'protocols.txt', 'service.txt', 'flags.txt']
 
-debug = True
+debug = False
 
 
 def get_list():

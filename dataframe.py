@@ -31,7 +31,7 @@ if debug:
 pair_values = values.get_list()
 
 # contains the training data.
-final_array = []
+data = []
 
 target = []  # contains the target label.
 
@@ -53,13 +53,13 @@ for line in dataset_lines:
         except ValueError:
             temp_arr.append(pair_values[attrib])
 
-    final_array.append(temp_arr)
+    data.append(temp_arr)
 
     # append the label to target list.
     target.append(pair_values[items[-1]])
 
 # convert the regular list into numpy array.
-df_data = np.asarray(final_array)
+df_data = np.asarray(data)
 df_target = np.asarray(target)
 
 # print df_data[0], len(df_data[0])

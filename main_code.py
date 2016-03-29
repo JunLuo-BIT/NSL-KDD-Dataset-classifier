@@ -3,7 +3,7 @@
 
 import dataframe
 
-# import mlpy
+import mlpy
 
 if __debug__:
     print 'Dataframe contains', len(dataframe.df_data), 'data',
@@ -29,3 +29,5 @@ print 'PCA trained'
 z = pca.transform(x, k=5)      # z is the reduced array.
 
 print 'After transform, data shape', z.shape
+for i in range(5):
+    print z[i]

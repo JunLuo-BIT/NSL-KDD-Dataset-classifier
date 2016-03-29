@@ -20,7 +20,7 @@ pca = mlpy.PCA()
 
 pca.learn(x)
 
-z = pca.transform(x, k=None)
+z = pca.transform(x, k=1)
 
 print z
 
