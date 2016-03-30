@@ -1,33 +1,33 @@
 # main_code.py
-# This is the entry point of the project
+# This is the entry point of the program.
+from sklearn.cross_validation import train_test_split
+from sklearn.metrics import accuracy_score
+from sklearn.preprocessing import StandardScaler
+from sklearn.svm import SVC
 
 import dataframe
-
-import mlpy
-
-if __debug__:
-    print 'Dataframe contains', len(dataframe.df_data), 'data',
-    print 'and contains', len(dataframe.df_target), 'target'
+import VarianceThresholdTest
 
 x = dataframe.df_data
 y = dataframe.df_target
 
-if __debug__:
-    print x.shape, y.shape
+v_threshold = 0.15
 
-# Here we are tyring to reduce the dimensionality by using
-# Principal Component Analysis(PCA)
-# Create an PCA object.
+new_x = VarianceThresholdTest.get_transformed_matrix_with_threshold(x, y, v_threshold)
 
-pca = mlpy.PCA()
-print 'PCA component learning from the data'
-pca.learn(x)
-print 'PCA trained'
+print 'After VarianceThreshold data contains %d features' % (len(new_x[0]))
 
+X_train, X_test, y_train, y_test = train_test_split(new_x, y, test_size=0.3, random_state=0)
 
-# embed x into k=2 dimension subspace.
-z = pca.transform(x, k=5)      # z is the reduced array.
+sc = StandardScaler()
+sc.fit(X_train)
+X_train_std = sc.transform(X_train)
+X_test_std = sc.transform(X_test)
 
-print 'After transform, data shape', z.shape
-for i in range(5):
-    print z[i]
+svm = SVC(kernel='linear', C=1.0, random_state=0)
+svm.fit(X_train_std, y_train)
+
+y_pred = svm.predict(X_test_std)
+print('Misclassified samples: %d' % (y_test != y_pred).sum())
+
+print('Accuracy: %.2f' % accuracy_score(y_test, y_pred))
