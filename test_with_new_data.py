@@ -9,15 +9,18 @@ from sklearn.svm import SVC
 import VarianceThresholdTest
 import dataframe
 
-train_x, train_y = dataframe.get_dataset_from_file('corrected')
-test_x = dataframe.get_test_data_from_file('kddcup.testdata.unlabeled_10_percent')
+train_x, train_y = dataframe.get_dataset_from_file('proper.train.data')
+test_x, test_y = dataframe.get_dataset_from_file('corrected')
 
 v_threshold = 0.15
+debug = True
 
 selector = VarianceThreshold(v_threshold)
-x_train = selector.fit_transform(train_x, train_y)
+new_test_x = selector.fit(train_x)
 
-selector = VarianceThreshold(v_threshold)
-x_test = selector.fit_transform(test_x)
+new_test_y = selector.transform(test_x)
 
-print len(x_train), len(x_test)
+if debug:
+    print 'After fit'
+    print 'Train contains %d features' % len(new_test_x[0])
+    print 'Test contains %d features' % len(new_test_y[0])
