@@ -14,52 +14,100 @@ import getpass
 import numpy as np
 import values
 
-input_dataset = 'corrected'
-file_name = "/home/%s/dataset/%s" % (getpass.getuser(), input_dataset)
 
-debug = True
+def get_dataset_from_file(input_dataset):
+    # input_dataset = 'corrected'
+    file_name = "/home/%s/dataset/%s" % (getpass.getuser(), input_dataset)
 
-with open(file_name) as dataset_file:
-    dataset_lines = dataset_file.readlines()
+    debug = True
 
-if debug:
-    print 'Using %s as dataset.' % file_name
-    print 'Dataset has %d instances, each instance with %d attributes' % (
-        len(dataset_lines), len(dataset_lines[0].split(',')))
+    with open(file_name) as dataset_file:
+        dataset_lines = dataset_file.readlines()
 
-# Get the key value pair which has been already done.
-pair_values = values.get_list()
+    if debug:
+        print 'Using %s as dataset.' % file_name
+        print 'Dataset has %d instances, each instance with %d attributes' % (
+            len(dataset_lines), len(dataset_lines[0].split(',')))
 
-# contains the training data.
-data = []
+    # Get the key value pair which has been already done.
+    pair_values = values.get_list()
 
-target = []  # contains the target label.
+    # contains the training data.
+    data = []
 
-for line in dataset_lines:
-    items = line.replace('\n', '').split(',')
+    target = []  # contains the target label.
 
-    if False:
-        print 'items length %d' % (len(items))
-        print items
+    for line in dataset_lines:
+        items = line.replace('\n', '').split(',')
 
-    # Get the n-1 data, (i.e features)
-    features = items[:len(items) - 1]
+        if False:
+            print 'items length %d' % (len(items))
+            print items
 
-    temp_arr = []
+        # Get the n-1 data, (i.e features)
+        features = items[:len(items) - 1]
 
-    for attrib in features:
-        try:
-            temp_arr.append(float(attrib))
-        except ValueError:
-            temp_arr.append(pair_values[attrib])
+        temp_arr = []
 
-    data.append(temp_arr)
+        for attrib in features:
+            try:
+                temp_arr.append(float(attrib))
+            except ValueError:
+                temp_arr.append(pair_values[attrib])
 
-    # append the label to target list.
-    target.append(pair_values[items[-1]])
+        data.append(temp_arr)
 
-# convert the regular list into numpy array.
-df_data = np.asarray(data)
-df_target = np.asarray(target)
+        # append the label to target list.
+        target.append(pair_values[items[-1]])
 
-# print df_data[0], len(df_data[0])
+    # convert the regular list into numpy array.
+    df_data = np.asarray(data)
+    df_target = np.asarray(target)
+
+    return df_data, df_target
+
+
+def get_test_data_from_file(input_dataset):
+    file_name = "/home/%s/dataset/%s" % (getpass.getuser(), input_dataset)
+
+    debug = True
+
+    with open(file_name) as dataset_file:
+        dataset_lines = dataset_file.readlines()
+
+    if debug:
+        print 'Using %s as dataset.' % file_name
+        print 'Dataset has %d instances, each instance with %d attributes' % (
+            len(dataset_lines), len(dataset_lines[0].split(',')))
+
+    # Get the key value pair which has been already done.
+    pair_values = values.get_list()
+
+    # contains the training data.
+    data = []
+
+    for line in dataset_lines:
+        items = line.replace('\n', '').split(',')
+
+        if False:
+            print 'items length %d' % (len(items))
+            print items
+
+        # Get the n-1 data, (i.e features)
+        features = items[:len(items) - 1]
+
+        temp_arr = []
+
+        for attrib in features:
+            try:
+                temp_arr.append(float(attrib))
+            except ValueError:
+                temp_arr.append(pair_values[attrib])
+
+        data.append(temp_arr)
+
+
+    # convert the regular list into numpy array.
+    df_data = np.asarray(data)
+
+    return df_data

@@ -3,10 +3,10 @@ import dataframe
 
 debug = True
 
-x, y = dataframe.df_data, dataframe.df_target
-
-print 'Dataset contains %d instances with %d initial features.' % (len(y), len(x[0]))
-
+# x, y = dataframe.get_dataset_from_file('corrected')
+#
+# print 'Dataset contains %d instances with %d initial features.' % (len(y), len(x[0]))
+#
 threshold = 0
 threshold_increment = 0.01
 
