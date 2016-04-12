@@ -10,6 +10,7 @@
 # and it will generate a list 'df_data' and 'df_target' which are numpy arrays.
 
 import getpass
+import os
 
 import numpy as np
 import values
@@ -17,7 +18,9 @@ import values
 
 def get_dataset_from_file(input_dataset):
     # input_dataset = 'corrected'
-    file_name = "/home/%s/dataset/%s" % (getpass.getuser(), input_dataset)
+    # file_name = "/home/%s/dataset/%s" % (getpass.getuser(), input_dataset)
+
+    file_name = '%s\\dataset\\%s' % (os.path.expanduser('~'), input_dataset)
 
     debug = True
 
@@ -68,7 +71,8 @@ def get_dataset_from_file(input_dataset):
 
 
 def get_test_data_from_file(input_dataset):
-    file_name = "/home/%s/dataset/%s" % (getpass.getuser(), input_dataset)
+    # file_name = "/home/%s/dataset/%s" % (getpass.getuser(), input_dataset)
+    file_name = '%s\\dataset\\%s' % (os.path.expanduser('~'), input_dataset)
 
     debug = True
 
