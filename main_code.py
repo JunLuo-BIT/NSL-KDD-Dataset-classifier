@@ -1,43 +1,181 @@
 # main_code.py
 # This is the entry point of the program.
+import glob
+
 from sklearn.cross_validation import train_test_split
 from sklearn.metrics import accuracy_score
+from sklearn.feature_selection import VarianceThreshold
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
 
 import dataframe
 import VarianceThresholdTest
+from sklearn.svm import SVR
+from sklearn.feature_selection import RFE
 
-x, y = dataframe.get_dataset_from_file('corrected')
 
-v_threshold = 0.15
+# x, y = dataframe.get_dataset_from_file('nsl.train')
+# test_x, test_y = dataframe.get_dataset_from_file('nsl.test')
+#
+# v_threshold = 0.05
+# RFE_TEST = True
 
-new_x = VarianceThresholdTest.get_transformed_matrix_with_threshold(x, y, v_threshold)
 
-print 'After VarianceThreshold data contains %d features' % (len(new_x[0]))
+def perform_train_test_split():
+    x, y = dataframe.get_dataset_from_file('nsl.train')
+    test_x, test_y = dataframe.get_dataset_from_file('nsl.test')
 
-X_train, X_test, y_train, y_test = train_test_split(new_x, y, test_size=0.3, random_state=0)
+    v_threshold = 0.15
 
-print 'Calling StandardScalar'
+    new_x = VarianceThresholdTest.get_transformed_matrix_with_threshold(x, y, v_threshold)
 
-sc = StandardScaler()
-sc.fit(X_train)
+    print 'After VarianceThreshold data contains %d features' % (len(new_x[0]))
 
-print 'Done with StandardScalar fit'
+    split_ratio = 0.1
 
-X_train_std = sc.transform(X_train)
-X_test_std = sc.transform(X_test)
+    while split_ratio < 1.0:
+        X_train, X_test, y_train, y_test = train_test_split(new_x, y, test_size=split_ratio, random_state=0)
 
-print 'Calling SVC'
-svm = SVC(kernel='linear', C=1.0, random_state=0)
-svm.fit(X_train_std, y_train)
+        print 'Stats for nerds'
+        print len(X_train), len(X_test), len(y_train), len(y_test)
+        print len(X_train[0]), len(X_test[0])
 
-print 'Done with svm fit'
+        print 'Calling StandardScalar with split_ratio = %f' % split_ratio
 
-print 'Beginning Predict...'
-y_pred = svm.predict(X_test_std)
-print 'Done with predict.'
+        sc = StandardScaler()
+        sc.fit(X_train)
 
-print('Misclassified samples: %d' % (y_test != y_pred).sum())
+        print 'Done with StandardScalar fit'
 
-print('Accuracy: %.2f' % accuracy_score(y_test, y_pred))
+        X_train_std = sc.transform(X_train)
+        X_test_std = sc.transform(X_test)
+
+        print 'Calling SVC'
+        svm = SVC(kernel='linear', C=1.0, random_state=0)
+        svm.fit(X_train_std, y_train)
+
+        print 'Done with svm fit'
+
+        print 'Beginning Predict...'
+        y_pred = svm.predict(X_test_std)
+        print 'Done with predict.'
+
+        print ('Misclassified samples: %d' % (y_test != y_pred).sum())
+
+        print ('Accuracy: %.2f' % (accuracy_score(y_test, y_pred) * 100))
+        print '-' * 80
+
+        split_ratio += 0.1
+
+
+def perform_svm_test():
+    v_threshold = 0.05
+    while v_threshold < 1.0:
+        sel = VarianceThreshold(v_threshold)
+        x = sel.fit_transform(x)
+        test_x = sel.transform(test_x)
+
+        print 'Support indices', sel.get_support(indices=True)
+        print 'x size {0}, test_x size {1}'.format(len(x[0]), len(test_x[0]))
+
+        # X_train, X_test, y_train, y_test = train_test_split(new_x, y, test_size=split_ratio, random_state=0)
+
+        sc = StandardScaler()
+        sc.fit(x)
+
+        print 'Done with StandardScalar fit'
+
+        X_train_std = sc.transform(x)
+        X_test_std = sc.transform(test_x)
+
+        print 'Calling SVC'
+        svm = SVC(kernel='linear', C=1.0, random_state=0)
+        svm.fit(X_train_std, y)
+        print 'Done with svm fit'
+
+        print 'Beginning Predict...'
+        y_pred = svm.predict(X_test_std)
+        print 'Done with predict.'
+
+        print y_pred[0], y[0], test_y[0]
+
+        # print ('Misclassified samples: %d' % (test_y != y_pred).sum())
+        error_count = 0
+
+        # if len(y_pred) == len(test_y):
+        #     l = len(y_pred)
+        #
+        #     for i in range(l):
+        #         if y_pred[i] != test_y[i]:
+        #             error_count += 1
+
+        error_count = ((y_pred != test_y).sum())
+        success_count = len(test_y) - error_count
+
+        print 'Error count', error_count
+        print 'Success count', success_count
+
+        print 'Accuracy ratio of Success: %f' % ((float(success_count) / len(test_y)) * 100)
+
+        # print ('Accuracy: %.2f' % (accuracy_score(test_y, y_pred) * 100))
+        print '-' * 80
+
+        v_threshold += 0.05
+
+        x, y = dataframe.get_dataset_from_file('nsl.train')
+        test_x, test_y = dataframe.get_dataset_from_file('nsl.test')
+
+all_test_datasets = glob.glob('C:\Users\Preetham\Documents\dataset\\nsl_independent\*')
+print 'Current datasets are', all_test_datasets
+
+if __name__ == '__main__':
+    # perform_train_test_split()
+    for test_dataset in all_test_datasets:
+        x, y = dataframe.get_dataset_from_file('nsl.train')
+        # test_x, test_y = dataframe.get_dataset_from_file('nsl.test')
+
+        test_x, test_y = dataframe.get_dataset_from_path(test_dataset)
+
+        # test_x = test_x[:1000]
+        # test_y = test_y[:1000]
+
+        threshold = 0.15
+
+        print 'Beginning fit transform'
+        selector = VarianceThreshold(threshold)
+        x = selector.fit_transform(x, y)
+
+
+        # selector = VarianceThreshold(threshold)
+        test_x = selector.transform(test_x)
+
+        # print 'Stats for nerds'
+        # print 'After calling VarianceThreshold with %f' % threshold
+        # print 'Train dataset', len(x), len(x[0]), len(y)
+        # print 'Test dataset', len(test_x), len(test_x[0]), len(test_y)
+
+        # print 'Just for sake'
+        # print x[0]
+        # print test_x[0]
+
+        sc = StandardScaler()
+        sc.fit(x)
+
+        print 'Beginning actual transform'
+        x_train_std = sc.transform(x)
+        x_test_std = sc.transform(test_x)
+
+        print 'Beginning fit'
+        svm = SVC(kernel='linear', C=1.0, random_state=0)
+        svm.fit(x_train_std, y)
+        print 'Done with fitting'
+
+        print 'Beginning Predict...'
+        y_pred = svm.predict(x_test_std)
+        print 'Done with predict.'
+
+        print 'Dataset', test_dataset
+        print ('Misclassified samples: %d' % (test_y != y_pred).sum())
+
+        print ('Accuracy: %.2f' % (accuracy_score(test_y, y_pred) * 100))
+        print '-' * 80
