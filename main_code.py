@@ -130,11 +130,12 @@ print 'Current datasets are', all_test_datasets
 
 if __name__ == '__main__':
     # perform_train_test_split()
-    for test_dataset in all_test_datasets:
+    # for test_dataset in all_test_datasets:
         x, y = dataframe.get_dataset_from_file('nsl.train')
         # test_x, test_y = dataframe.get_dataset_from_file('nsl.test')
 
-        test_x, test_y = dataframe.get_dataset_from_path(test_dataset)
+        # test_x, test_y = dataframe.get_dataset_from_path('nsl.test.modified')
+        test_x, test_y = dataframe.get_dataset_from_file('corrected')
 
         # test_x = test_x[:1000]
         # test_y = test_y[:1000]
@@ -174,7 +175,7 @@ if __name__ == '__main__':
         y_pred = svm.predict(x_test_std)
         print 'Done with predict.'
 
-        print 'Dataset', test_dataset
+        # print 'Dataset', test_dataset
         print ('Misclassified samples: %d' % (test_y != y_pred).sum())
 
         print ('Accuracy: %.2f' % (accuracy_score(test_y, y_pred) * 100))
