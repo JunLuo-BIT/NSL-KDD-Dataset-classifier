@@ -135,7 +135,7 @@ if __name__ == '__main__':
         # test_x, test_y = dataframe.get_dataset_from_file('nsl.test')
 
         # test_x, test_y = dataframe.get_dataset_from_path('nsl.test.modified')
-        test_x, test_y = dataframe.get_dataset_from_file('corrected')
+        test_x, test_y = dataframe.get_dataset_from_file('nsl.test.modified')
 
         # test_x = test_x[:1000]
         # test_y = test_y[:1000]
@@ -145,7 +145,6 @@ if __name__ == '__main__':
         print 'Beginning fit transform'
         selector = VarianceThreshold(threshold)
         x = selector.fit_transform(x, y)
-
 
         # selector = VarianceThreshold(threshold)
         test_x = selector.transform(test_x)
@@ -178,5 +177,5 @@ if __name__ == '__main__':
         # print 'Dataset', test_dataset
         print ('Misclassified samples: %d' % (test_y != y_pred).sum())
 
-        print ('Accuracy: %.2f' % (accuracy_score(test_y, y_pred) * 100))
+        print ('Accuracy: %.2f\\%' % (accuracy_score(test_y, y_pred) * 100))
         print '-' * 80
