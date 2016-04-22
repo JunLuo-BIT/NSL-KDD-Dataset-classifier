@@ -14,7 +14,7 @@ import numpy as np
 import values
 
 
-def get_all_lines_from_dataset(dataset_file):
+def __get_all_lines_from_dataset(dataset_file):
     """Opens the dataset_file in READ MODE; returns the lines of the file."""
     with open(dataset_file) as f:
         lines = f.readlines()
@@ -22,7 +22,7 @@ def get_all_lines_from_dataset(dataset_file):
     return lines
 
 
-def convert_feature_to_float(features):
+def __convert_feature_to_float(features):
     """Converts the string attributes(Actual features) to appropriate float values"""
 
     temp_arr = []
@@ -39,19 +39,171 @@ def convert_feature_to_float(features):
     return temp_arr
 
 
-def get_dataset_from_file(input_dataset):
-    """"""
-    # input_dataset = 'corrected'
-    # file_name = "/home/%s/dataset/%s" % (getpass.getuser(), input_dataset)
+# def get_dataset_from_file(input_dataset):
+#     """"""
+#     # input_dataset = 'corrected'
+#     # file_name = "/home/%s/dataset/%s" % (getpass.getuser(), input_dataset)
+#
+#     file_name = '%s\\Documents\\dataset\\%s' % (os.path.expanduser('~'), input_dataset)
+#
+#     debug = True
+#
+#     # with open(file_name) as dataset_file:
+#     #     dataset_lines = dataset_file.readlines()
+#
+#     dataset_lines = __get_all_lines_from_dataset(file_name)
+#
+#     if debug:
+#         print 'Using %s as dataset.' % file_name
+#         print 'Dataset has %d instances, each instance with %d attributes' % (
+#             len(dataset_lines), len(dataset_lines[0].split(',')))
+#
+#     # Get the key value pair.
+#     pair_values = values.get_list()
+#
+#     features = []
+#     label = []  # contains the target label.
+#
+#     for line in dataset_lines:
+#         items = line.replace('\n', '').split(',')
+#
+#         if False:
+#             print 'items length %d' % (len(items))
+#             print items
+#
+#         # Get the n-1 data, (i.e features)
+#         t_features = items[:len(items) - 1]
+#
+#         temp_arr = __convert_feature_to_float(t_features)
+#
+#         features.append(temp_arr)
+#
+#         # append the label to target list.
+#         label.append(pair_values[items[-1]])
+#
+#     # convert the regular list into numpy array.
+#     df_data = np.asarray(features)
+#     df_target = np.asarray(label)
+#
+#     return df_data, df_target
 
-    file_name = '%s\\Documents\\dataset\\%s' % (os.path.expanduser('~'), input_dataset)
+
+# def get_test_data_from_file(input_dataset):
+#     # file_name = "/home/%s/dataset/%s" % (getpass.getuser(), input_dataset)
+#     file_name = '%s\\Documents\\dataset\\%s' % (os.path.expanduser('~'), input_dataset)
+#
+#     debug = True
+#
+#     # with open(file_name) as dataset_file:
+#     #     dataset_lines = dataset_file.readlines()
+#
+#     dataset_lines = __get_all_lines_from_dataset(file_name)
+#
+#     if debug:
+#         print 'Using %s as dataset.' % file_name
+#         print 'Dataset has %d instances, each instance with %d attributes' % (
+#             len(dataset_lines), len(dataset_lines[0].split(',')))
+#
+#     # Get the key value pair which has been already done.
+#     pair_values = values.get_list()
+#
+#     # contains the training data.
+#     data = []
+#
+#     for line in dataset_lines:
+#         items = line.replace('\n', '').split(',')
+#
+#         if False:
+#             print 'items length %d' % (len(items))
+#             print items
+#
+#         # Get the n-1 data, (i.e features)
+#         features = items[:len(items) - 1]
+#
+#         temp_arr = []
+#
+#         for attrib in features:
+#             try:
+#                 temp_arr.append(float(attrib))
+#             except ValueError:
+#                 temp_arr.append(pair_values[attrib])
+#
+#         data.append(temp_arr)
+#
+#     # convert the regular list into numpy array.
+#     df_data = np.asarray(data)
+#
+#     return df_data
+
+
+# def get_dataset_from_path(file_path):
+#     debug = True
+#
+#     with open(file_path) as dataset_file:
+#         dataset_lines = dataset_file.readlines()
+#
+#     if debug:
+#         print 'Using %s as dataset.' % file_path
+#         print 'Dataset has %d instances, each instance with %d attributes' % (
+#             len(dataset_lines), len(dataset_lines[0].split(',')))
+#
+#     # Get the key value pair which has been already done.
+#     pair_values = values.get_list()
+#
+#     # contains the training data.
+#     data = []
+#
+#     target = []  # contains the target label.
+#
+#     for line in dataset_lines:
+#         items = line.replace('\n', '').split(',')
+#
+#         if False:
+#             print 'items length %d' % (len(items))
+#             print items
+#
+#         # Get the n-1 data, (i.e features)
+#         features = items[:len(items) - 1]
+#
+#         temp_arr = []
+#
+#         for attrib in features:
+#             try:
+#                 temp_arr.append(float(attrib))
+#             except ValueError:
+#                 temp_arr.append(pair_values[attrib])
+#
+#         data.append(temp_arr)
+#
+#         # append the label to target list.
+#         target.append(pair_values[items[-1]])
+#
+#     # convert the regular list into numpy array.
+#     df_data = np.asarray(data)
+#     df_target = np.asarray(target)
+#
+#     return df_data, df_target
+
+
+def get_data_set(data_set_file, absolute_path=False, test_data_only=False):
+    """
+    Read the dataset file and then return it as NumPy array.
+    Does conversion from string to float by looking up the pair_value list.
+    :param data_set_file: File containing data set.
+    :param absolute_path: if True, then data_set_file is treated to be a path; if False then the default path
+    (C:\users\user\documents\dataset) is taken as the directory
+    :param test_data_only: if True then only the features will be returned.
+    :return: Numpy array of features and optional label.
+    """
+
+    if absolute_path:
+        file_name = data_set_file
+    else:
+        file_name = '%s\\Documents\\dataset\\%s' % (os.path.expanduser('~'), data_set_file)
 
     debug = True
 
-    # with open(file_name) as dataset_file:
-    #     dataset_lines = dataset_file.readlines()
-
-    dataset_lines = get_all_lines_from_dataset(file_name)
+    dataset_lines = __get_all_lines_from_dataset(file_name)
 
     if debug:
         print 'Using %s as dataset.' % file_name
@@ -72,9 +224,9 @@ def get_dataset_from_file(input_dataset):
             print items
 
         # Get the n-1 data, (i.e features)
-        features = items[:len(items) - 1]
+        t_features = items[:len(items) - 1]
 
-        temp_arr = convert_feature_to_float(features)
+        temp_arr = __convert_feature_to_float(t_features)
 
         features.append(temp_arr)
 
@@ -85,101 +237,7 @@ def get_dataset_from_file(input_dataset):
     df_data = np.asarray(features)
     df_target = np.asarray(label)
 
-    return df_data, df_target
-
-
-def get_test_data_from_file(input_dataset):
-    # file_name = "/home/%s/dataset/%s" % (getpass.getuser(), input_dataset)
-    file_name = '%s\\Documents\\dataset\\%s' % (os.path.expanduser('~'), input_dataset)
-
-    debug = True
-
-    # with open(file_name) as dataset_file:
-    #     dataset_lines = dataset_file.readlines()
-
-    dataset_lines = get_all_lines_from_dataset(file_name)
-
-    if debug:
-        print 'Using %s as dataset.' % file_name
-        print 'Dataset has %d instances, each instance with %d attributes' % (
-            len(dataset_lines), len(dataset_lines[0].split(',')))
-
-    # Get the key value pair which has been already done.
-    pair_values = values.get_list()
-
-    # contains the training data.
-    data = []
-
-    for line in dataset_lines:
-        items = line.replace('\n', '').split(',')
-
-        if False:
-            print 'items length %d' % (len(items))
-            print items
-
-        # Get the n-1 data, (i.e features)
-        features = items[:len(items) - 1]
-
-        temp_arr = []
-
-        for attrib in features:
-            try:
-                temp_arr.append(float(attrib))
-            except ValueError:
-                temp_arr.append(pair_values[attrib])
-
-        data.append(temp_arr)
-
-    # convert the regular list into numpy array.
-    df_data = np.asarray(data)
-
-    return df_data
-
-
-def get_dataset_from_path(file_path):
-    debug = True
-
-    with open(file_path) as dataset_file:
-        dataset_lines = dataset_file.readlines()
-
-    if debug:
-        print 'Using %s as dataset.' % file_path
-        print 'Dataset has %d instances, each instance with %d attributes' % (
-            len(dataset_lines), len(dataset_lines[0].split(',')))
-
-    # Get the key value pair which has been already done.
-    pair_values = values.get_list()
-
-    # contains the training data.
-    data = []
-
-    target = []  # contains the target label.
-
-    for line in dataset_lines:
-        items = line.replace('\n', '').split(',')
-
-        if False:
-            print 'items length %d' % (len(items))
-            print items
-
-        # Get the n-1 data, (i.e features)
-        features = items[:len(items) - 1]
-
-        temp_arr = []
-
-        for attrib in features:
-            try:
-                temp_arr.append(float(attrib))
-            except ValueError:
-                temp_arr.append(pair_values[attrib])
-
-        data.append(temp_arr)
-
-        # append the label to target list.
-        target.append(pair_values[items[-1]])
-
-    # convert the regular list into numpy array.
-    df_data = np.asarray(data)
-    df_target = np.asarray(target)
-
-    return df_data, df_target
+    if test_data_only:
+        return df_data
+    else:
+        return df_data, df_target
