@@ -13,6 +13,8 @@ import VarianceThresholdTest
 from sklearn.svm import SVR
 from sklearn.feature_selection import RFE
 
+from LearnerModel import LearnerModel
+
 STATS_FOR_NERDS = False
 
 
@@ -131,48 +133,47 @@ if __name__ == '__main__':
 
     test_x, test_y = dataframe.get_data_set('nsl.test.modified')
 
-    # test_x, test_y = dataframe.get_dataset_from_file('nsl.test.modified')
+    learner = LearnerModel(x, y, test_x, test_y)
+    learner.perform_variance_threshold(0.15)
+    learner.perform_standard_scalar_fit_predict()
 
-    # test_x = test_x[:1000]
-    # test_y = test_y[:1000]
-
-    threshold = 0.15
-
-    print 'Beginning fit transform'
-    selector = VarianceThreshold(threshold)
-    x = selector.fit_transform(x, y)
-
+    # threshold = 0.15
+    #
+    # print 'Beginning fit transform'
     # selector = VarianceThreshold(threshold)
-    test_x = selector.transform(test_x)
-
-    if STATS_FOR_NERDS:
-        print 'Stats for nerds'
-        print 'After calling VarianceThreshold with %f' % threshold
-        print 'Train dataset', len(x), len(x[0]), len(y)
-        print 'Test dataset', len(test_x), len(test_x[0]), len(test_y)
-
-        print 'Just for sake'
-        print x[0]
-        print test_x[0]
-
-    sc = StandardScaler()
-    sc.fit(x)
-
-    print 'Beginning actual transform'
-    x_train_std = sc.transform(x)
-    x_test_std = sc.transform(test_x)
-
-    print 'Beginning fit'
-    svm = SVC(kernel='linear', C=1.0, random_state=0)
-    svm.fit(x_train_std, y)
-    print 'Done with fitting'
-
-    print 'Beginning Predict...'
-    y_pred = svm.predict(x_test_std)
-    print 'Done with predict.'
-
-    # print 'Dataset', test_dataset
-    print ('Misclassified samples: %d' % (test_y != y_pred).sum())
-
-    print ('Accuracy: %.2f %%' % (accuracy_score(test_y, y_pred) * 100))
-    print '-' * 80
+    # x = selector.fit_transform(x, y)
+    #
+    # # selector = VarianceThreshold(threshold)
+    # test_x = selector.transform(test_x)
+    #
+    # if STATS_FOR_NERDS:
+    #     print 'Stats for nerds'
+    #     print 'After calling VarianceThreshold with %f' % threshold
+    #     print 'Train dataset', len(x), len(x[0]), len(y)
+    #     print 'Test dataset', len(test_x), len(test_x[0]), len(test_y)
+    #
+    #     print 'Just for sake'
+    #     print x[0]
+    #     print test_x[0]
+    #
+    # sc = StandardScaler()
+    # sc.fit(x)
+    #
+    # print 'Beginning actual transform'
+    # x_train_std = sc.transform(x)
+    # x_test_std = sc.transform(test_x)
+    #
+    # print 'Beginning fit'
+    # svm = SVC(kernel='linear', C=1.0, random_state=0)
+    # svm.fit(x_train_std, y)
+    # print 'Done with fitting'
+    #
+    # print 'Beginning Predict...'
+    # y_pred = svm.predict(x_test_std)
+    # print 'Done with predict.'
+    #
+    # # print 'Dataset', test_dataset
+    # print ('Misclassified samples: %d' % (test_y != y_pred).sum())
+    #
+    # print ('Accuracy: %.2f %%' % (accuracy_score(test_y, y_pred) * 100))
+    # print '-' * 80
