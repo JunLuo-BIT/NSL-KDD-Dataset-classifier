@@ -129,7 +129,6 @@ if __name__ == '__main__':
     # for test_dataset in all_test_datasets:
     x, y = dataframe.get_data_set('nsl.train')
 
-
     test_x, test_y = dataframe.get_data_set('nsl.test.modified')
 
     # test_x, test_y = dataframe.get_dataset_from_file('nsl.test.modified')

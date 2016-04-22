@@ -186,14 +186,13 @@ def __convert_feature_to_float(features):
 
 
 def get_data_set(data_set_file, absolute_path=False, test_data_only=False):
-    """
-    Read the dataset file and then return it as NumPy array.
+    """Read the dataset file and then return it as NumPy array.
     Does conversion from string to float by looking up the pair_value list.
     :param data_set_file: File containing data set.
     :param absolute_path: if True, then data_set_file is treated to be a path; if False then the default path
     (C:\users\user\documents\dataset) is taken as the directory
     :param test_data_only: if True then only the features will be returned.
-    :return: Numpy array of features and optional label.
+    :return Numpy array of features and optional label.
     """
 
     if absolute_path:
