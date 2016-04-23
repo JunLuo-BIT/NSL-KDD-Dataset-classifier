@@ -1,5 +1,5 @@
 import numpy as np
-import mlpy
+# import mlpy
 
 import matplotlib.pyplot as plt
 
@@ -27,10 +27,10 @@ print z
 print z.shape
 
 # plot them all
-# plt.set_cmap(plt.cm.Paired)
-# fig1 = plt.figure(1)
-# title = plt.title("PCA on iris dataset")
-# plot = plt.scatter(z[:, 0], z[:, 1], c=y)
-# labx = plt.xlabel("First component")
-# laby = plt.ylabel("Second component")
-# plt.show()
+plt.set_cmap(plt.cm.Paired)
+fig1 = plt.figure(1)
+title = plt.title("PCA on iris dataset")
+plot = plt.scatter(z[:, 0], z[:, 1], c=y)
+labx = plt.xlabel("First component")
+laby = plt.ylabel("Second component")
+plt.show()

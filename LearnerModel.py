@@ -1,6 +1,3 @@
-"""
-This module defines a class for the learner module.
-"""
 from sklearn.feature_selection import VarianceThreshold
 from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import StandardScaler
@@ -8,7 +5,17 @@ from sklearn.svm import SVC
 
 
 class LearnerModel:
+    """
+    This module defines a class for the learner module.
+    """
+
     def __init__(self, train_x, train_y, test_x, test_y):
+        """
+        :param train_x: Trainer data set of features
+        :param train_y: Trainer data set of labels.
+        :param test_x: Test data set of features.
+        :param test_y: Test data set of labels.
+        """
         self.train_x = train_x
         self.train_y = train_y
         self.test_x = test_x
@@ -20,7 +27,10 @@ class LearnerModel:
 
         self.test_x = selector.transform(self.test_x)
 
-    def perform_standard_scalar_fit_predict(self):
+    def perform_standard_scalar_fit_transform_predict(self):
+        """
+        Performs StandardScalar.fit() transform() and predict()
+        """
         sc = StandardScaler()
         sc.fit(self.train_x)
 
