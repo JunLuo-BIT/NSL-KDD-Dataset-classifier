@@ -68,6 +68,7 @@ def perform_train_test_split():
         split_ratio += 0.1
 
 
+# This is no longer needed.
 def perform_svm_test():
     v_threshold = 0.05
     while v_threshold < 1.0:
