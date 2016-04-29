@@ -127,7 +127,7 @@ def perform_svm_test():
         test_x, test_y = dataframe.get_dataset_from_file('nsl.test')
 
 
-all_test_datasets = glob.glob('C:\Users\Preetham\Documents\dataset\\nsl_independent\*')
+# all_test_datasets = glob.glob('C:\Users\Preetham\Documents\dataset\\nsl_independent\*')
 # print 'Current datasets are', all_test_datasets
 
 if __name__ == '__main__':
