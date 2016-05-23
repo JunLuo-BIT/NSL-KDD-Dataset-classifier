@@ -1,21 +1,10 @@
 # main_code.py
 # This is the entry point of the program.
-import glob
 
-from sklearn.cross_validation import train_test_split
-from sklearn.metrics import accuracy_score
-from sklearn.feature_selection import VarianceThreshold
-from sklearn.preprocessing import StandardScaler
-from sklearn.svm import SVC
+import tkFileDialog
+from Tkinter import Tk
 
 import dataframe
-import VarianceThresholdTest
-from sklearn.svm import SVR
-from sklearn.feature_selection import RFE
-
-from Tkinter import Tk
-import tkFileDialog
-
 from LearnerModel import LearnerModel
 
 STATS_FOR_NERDS = False
@@ -131,8 +120,8 @@ STATS_FOR_NERDS = False
 if __name__ == '__main__':
     # perform_train_test_split()
 
-    if __debug__:
-        print "Main"
+    # if __debug__:
+    #     print "Main"
 
     Tk().withdraw()
 
@@ -149,10 +138,12 @@ if __name__ == '__main__':
         # Creating LearnerModel is Compulsory.
         learner = LearnerModel(x, y, test_x, test_y)
 
-        print 'KNN'
         learner.perform_knn_classification()
+        print '*' * 80
 
-        print 'StandardScalar Fit.'
+        learner.perform_decision_tree_classification()
+        print '*' * 80
+
         learner.perform_variance_threshold(0.15)
         learner.perform_standard_scalar_fit_transform_predict()
     else:

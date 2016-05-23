@@ -52,10 +52,10 @@ class LearnerModel:
 
     def perform_knn_classification(self):
         knn = KNeighborsClassifier()
-        print 'KNN: Begin Fit'
+        print 'KNN: Performing Fit'
         knn.fit(self.train_x, self.train_y)
-        print 'KNN Fit done.'
 
+        print 'KNN: Beginning Predict'
         y_pred = knn.predict(self.test_x)
 
         print ('Misclassified samples: %d' % (self.test_y != y_pred).sum())
