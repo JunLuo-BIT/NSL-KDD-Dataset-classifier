@@ -1,4 +1,5 @@
 from sklearn.feature_selection import VarianceThreshold
+from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
@@ -46,5 +47,15 @@ class LearnerModel:
         y_pred = svm.predict(x_test_std)
 
         print ('Misclassified samples: %d' % (self.test_y != y_pred).sum())
+        print ('Accuracy: %.2f %%' % (accuracy_score(self.test_y, y_pred) * 100))
 
+    def perform_knn_classification(self):
+        knn = KNeighborsClassifier()
+        print 'KNN: Begin Fit'
+        knn.fit(self.train_x, self.train_y)
+        print 'KNN Fit done.'
+
+        y_pred = knn.predict(self.test_x)
+
+        print ('Misclassified samples: %d' % (self.test_y != y_pred).sum())
         print ('Accuracy: %.2f %%' % (accuracy_score(self.test_y, y_pred) * 100))

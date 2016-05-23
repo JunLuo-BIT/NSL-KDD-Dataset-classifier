@@ -131,6 +131,9 @@ STATS_FOR_NERDS = False
 if __name__ == '__main__':
     # perform_train_test_split()
 
+    if __debug__:
+        print "Main"
+
     Tk().withdraw()
 
     train_data_set = tkFileDialog.askopenfilename()
@@ -143,7 +146,13 @@ if __name__ == '__main__':
 
         test_x, test_y = dataframe.get_data_set(test_data_set, absolute_path=True)
 
+        # Creating LearnerModel is Compulsory.
         learner = LearnerModel(x, y, test_x, test_y)
+
+        print 'KNN'
+        learner.perform_knn_classification()
+
+        print 'StandardScalar Fit.'
         learner.perform_variance_threshold(0.15)
         learner.perform_standard_scalar_fit_transform_predict()
     else:
