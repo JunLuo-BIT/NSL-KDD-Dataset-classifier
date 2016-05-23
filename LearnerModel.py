@@ -3,6 +3,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
+from sklearn.tree import DecisionTreeClassifier
 
 
 class LearnerModel:
@@ -56,6 +57,19 @@ class LearnerModel:
         print 'KNN Fit done.'
 
         y_pred = knn.predict(self.test_x)
+
+        print ('Misclassified samples: %d' % (self.test_y != y_pred).sum())
+        print ('Accuracy: %.2f %%' % (accuracy_score(self.test_y, y_pred) * 100))
+
+    def perform_decision_tree_classification(self):
+        """Decision Tree classifier"""
+        dtc = DecisionTreeClassifier()
+
+        print 'DecisionTreeClassifier: Performing Fit'
+        dtc.fit(self.train_x, self.train_y)
+
+        print 'DecisionTreeClassifier: Beginning Predict'
+        y_pred = dtc.predict(self.test_x)
 
         print ('Misclassified samples: %d' % (self.test_y != y_pred).sum())
         print ('Accuracy: %.2f %%' % (accuracy_score(self.test_y, y_pred) * 100))
