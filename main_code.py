@@ -120,9 +120,6 @@ STATS_FOR_NERDS = False
 if __name__ == '__main__':
     # perform_train_test_split()
 
-    # if __debug__:
-    #     print "Main"
-
     Tk().withdraw()
 
     train_data_set = tkFileDialog.askopenfilename()
