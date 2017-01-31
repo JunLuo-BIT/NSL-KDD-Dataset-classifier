@@ -52,7 +52,8 @@ def get_data_set(data_set_file, absolute_path=False, test_data_only=False):
     if absolute_path:
         file_name = data_set_file
     else:
-        file_name = '%s\\Documents\\dataset\\%s' % (os.path.expanduser('~'), data_set_file)
+        file_name = '%s\\Documents\\dataset\\%s' % (
+            os.path.expanduser('~'), data_set_file)
 
     debug = True
 
