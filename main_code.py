@@ -130,7 +130,8 @@ if __name__ == '__main__':
 
         x, y = dataframe.get_data_set(train_data_set, absolute_path=True)
 
-        test_x, test_y = dataframe.get_data_set(test_data_set, absolute_path=True)
+        test_x, test_y = dataframe.get_data_set(
+            test_data_set, absolute_path=True)
 
         # Creating LearnerModel is Compulsory.
         learner = LearnerModel(x, y, test_x, test_y)

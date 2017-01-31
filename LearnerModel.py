@@ -48,7 +48,8 @@ class LearnerModel:
         y_pred = svm.predict(x_test_std)
 
         print ('Misclassified samples: %d' % (self.test_y != y_pred).sum())
-        print ('Accuracy: %.2f %%' % (accuracy_score(self.test_y, y_pred) * 100))
+        print ('Accuracy: %.2f %%' %
+               (accuracy_score(self.test_y, y_pred) * 100))
 
     def perform_knn_classification(self):
         knn = KNeighborsClassifier()
@@ -59,7 +60,8 @@ class LearnerModel:
         y_pred = knn.predict(self.test_x)
 
         print ('Misclassified samples: %d' % (self.test_y != y_pred).sum())
-        print ('Accuracy: %.2f %%' % (accuracy_score(self.test_y, y_pred) * 100))
+        print ('Accuracy: %.2f %%' %
+               (accuracy_score(self.test_y, y_pred) * 100))
 
     def perform_decision_tree_classification(self):
         """Decision Tree classifier"""
@@ -72,4 +74,5 @@ class LearnerModel:
         y_pred = dtc.predict(self.test_x)
 
         print ('Misclassified samples: %d' % (self.test_y != y_pred).sum())
-        print ('Accuracy: %.2f %%' % (accuracy_score(self.test_y, y_pred) * 100))
+        print ('Accuracy: %.2f %%' %
+               (accuracy_score(self.test_y, y_pred) * 100))
